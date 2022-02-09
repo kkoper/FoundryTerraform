@@ -2,12 +2,6 @@
 runcmd:
   - sudo apt update
   - sudo apt upgrade -y
-  # - sudo apt install nginx -y
-  # - sudo ufw allow 'Nginx HTTP'
-  # - sudo systemctl enable nginx
-  # - sudo adduser --disabled-password --gecos "" foundry
-  # - sudo usermod -aG sudo foundry
-  # - su - foundry
   - curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
   - sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
   - curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo apt-key add -
@@ -17,12 +11,13 @@ runcmd:
   - sudo npm install pm2 -g
   - pm2 startup
   - sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u foundry --hp /home/foundry
-  - pm2 save
-  - pm2 unstartup systemd
-  - mkdir ~/foundry
-  - aws s3 cp "${foundryDownloadLink}" ./foundry/foundryvtt.zip
-  - unzip ~/foundry/foundryvtt.zip -d ~/foundry/
-  - rm ~/foundry/foundryvtt.zip
-  - pm2 start "node /home/ubuntu/foundry/resources/app/main.js --dataPath=/home/ubuntu/foundryuserdata" --name foundry
+  - pm2 save --force
+  - sudo mkdir /home/ubuntu/foundry/
+  - sudo aws s3 cp "${foundryDownloadLink}" /home/ubuntu/foundry/foundryvtt.zip
+  - sudo unzip /home/ubuntu/foundry/foundryvtt.zip -d /home/ubuntu/foundry/
+  - sudo rm /home/ubuntu/foundry/foundryvtt.zip
+  - pm2 start "node /home/ubuntu/foundry/resources/app/main.js --dataPath=/home/ubuntu/foundryuserdata" --name foundryc
   - pm2 list
   - pm2 save
+
+  # //aws s3 sync /home/ubuntu/foundryuserdata s3://foundry-backup-kevinkoper.nl

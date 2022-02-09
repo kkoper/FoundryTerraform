@@ -41,7 +41,8 @@ data "aws_iam_policy_document" "foundry_ec2_writeS3" {
       "s3:GetObject",
       "s3:ListBucket",
       "s3:DeleteObject",
-      "s3:PutObjectAcl"
+      "s3:PutObjectAcl",
+      "s3:ListObjectsV2"
     ]
     effect = "Allow"
     resources = [
@@ -49,6 +50,8 @@ data "aws_iam_policy_document" "foundry_ec2_writeS3" {
       "${aws_s3_bucket.foundryVTT-static-assets.arn}",
       "${aws_s3_bucket.foundryvtt-server.arn}",
       "${aws_s3_bucket.foundryvtt-server.arn}/*",
+      "arn:aws:s3:::foundry-backup-kevinkoper.nl",
+      "arn:aws:s3:::foundry-backup-kevinkoper.nl/*"
     ]
   }
   statement {

@@ -17,6 +17,17 @@ resource "aws_subnet" "foundry_subnet" {
   }
 }
 
+resource "aws_subnet" "foundry_subnetb" {
+  vpc_id                  = aws_vpc.foundry_vpc.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "eu-central-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    application = "FoundryVTT"
+  }
+}
+
 resource "aws_route_table" "foundry_route_table" {
   vpc_id = aws_vpc.foundry_vpc.id
 
@@ -59,7 +70,7 @@ resource "aws_security_group" "foundry_allow_tls" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.MY_IP}"]
+    cidr_blocks = ["${var.MY_IP}/32"]
   }
 
   ingress {

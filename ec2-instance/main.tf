@@ -52,6 +52,10 @@ resource "aws_instance" "foundry_server" {
     private_key = file("${var.FOUNDRY_SSH_PRIVATE_KEY_PATH}")
   }
 
+  root_block_device {
+     volume_size = 40
+  }
+
   # nginx
   user_data = data.cloudinit_config.server_config.rendered
 
@@ -69,5 +73,10 @@ output "foundry_server_adress" {
 }
 
 output "SSH_Command" {
-  value = "sudo ssh -i '${var.FOUNDRY_SSH_PRIVATE_KEY_PATH}' ubuntu@${aws_instance.foundry_server.public_ip}"
+  value = "ssh -i '${var.FOUNDRY_SSH_PRIVATE_KEY_PATH}' ubuntu@${aws_instance.foundry_server.public_ip}"
 }
+
+output "Foundry_URL" {
+  value = "https://${aws_route53_record.foundry_a_record.name}"
+}
+

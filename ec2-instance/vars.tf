@@ -1,11 +1,6 @@
 variable "AWS_REGION" {
   default = "eu-central-1"
 }
-
-variable "MY_IP" {
-  default = "87.210.175.220/32"
-}
-
 variable "FOUNDRY_SSH_PUBLIC_KEY_PATH" {
   default = "../keys/foundry-ssh.pub"
 }
@@ -24,4 +19,15 @@ variable "FOUNDRY_FILENAME" {
 
 variable "FOUNDRY_PATH" {
   default = "../foundry"
+}
+
+variable "SUBDOMAIN" {
+  default = "foundry"
+}
+
+#include trailing period ( xyz.com.)
+variable "DNS_ZONE" {
+}
+
+variable "MY_IP" {
 }
